@@ -6,14 +6,21 @@ import sys
 import re
 import time
 
-def ask(arg:str) -> str:
-	if checkValidIP(arg):
-		if arg in assignedIPAddresses:
+def ask(inputIP:str) -> str:
+	if checkValidIP(inputIP):
+		if inputIP in assignedIPAddresses:
 			print("This IP address is already assigned.")
 		else:
-			assignedIPAddresses[arg] = "assigned"
+			assignedIPAddresses[inputIP] = "assigned"
 	else:
 		print("The inputted IP is not valid")
+
+def status(inputIP:str) -> str:
+	if(checkValidIP(inputIP)):
+		if inputIP in assignedIPAddresses:
+			print(inputIP + " ASSIGNED")
+		else:
+			print(inputIP + " AVAILABLE")
 
 
 def checkValidIP(inputIP: str) -> bool:

@@ -1,11 +1,14 @@
+#written by Mars Cadieux
 assignedIPAddresses = {}
 retiredIPAddresses = []
 ipGenerator = [0,0,0,0]
 
+#written by Mars Cadieux
 import sys
 import time
 from datetime import datetime
 
+#written by Mars Cadieux
 def ask() -> str:
 	newIP = generateIP()
 	if newIP == "-1":
@@ -14,7 +17,7 @@ def ask() -> str:
 		assignedIPAddresses[newIP] = datetime.now()
 		print("Offer " + newIP)
 
-
+#written by Mars Cadieux
 def status(inputIP:str) -> str:
 	if(checkValidIP(inputIP)):
 		if inputIP in assignedIPAddresses:
@@ -29,6 +32,7 @@ def status(inputIP:str) -> str:
 	else:
 		print("The inputted string does not resemble an IP address.")
 
+#written by Mars Cadieux
 def release(inputIP:str) -> str:
 	if(checkValidIP(inputIP)):
 		#IP is in our assigned IPs and its timer hasn't expired. we want to release it
@@ -46,7 +50,7 @@ def release(inputIP:str) -> str:
 	else:
 		print("The inputted string does not resemble an IP address.")
 
-
+#written by Mars Cadieux
 def renew(inputIP:str) -> str:
 	if(checkValidIP(inputIP)):
 		if inputIP in assignedIPAddresses:
@@ -73,6 +77,7 @@ def checkValidIP(inputIP: str) -> bool:
 			return False
 	return True
 
+#written by Mars Cadieux
 def generateIP() -> str:
 	#first, if we have any retired IP addresses, use them instead of generating a new one
 	if len(retiredIPAddresses) > 0:
@@ -95,7 +100,7 @@ def generateIP() -> str:
 		ipGenerator[3] += 1
 		return generatedIP
 
-
+#written by Mars Cadieux
 def main():
 	print("Welcome to the DHCP server! Type in a command to get started. Type 0 to exit.\n")
 	userInput = input("> ")
@@ -113,8 +118,6 @@ def main():
 			status(userInput[7:])
 			userInput = input("> ")
 
-
-
-
+#written by Mars Cadieux
 if __name__ == "__main__":
     main()

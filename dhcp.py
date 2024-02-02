@@ -4,20 +4,21 @@ ipGenerator = [0,0,0,0]
 
 import sys
 import time
+from datetime import datetime
 
 def ask() -> str:
-	newIP = generateIP
+	newIP = generateIP()
 	if newIP == "-1":
 			print("No available IP addresses. Please try again later.")
 	else:
-		assignedIPAddresses[newIP] = time.time()
+		assignedIPAddresses[newIP] = datetime.now()
 		print("Offer " + newIP)
 
 
 def status(inputIP:str) -> str:
 	if(checkValidIP(inputIP)):
 		if inputIP in assignedIPAddresses:
-			if time.time - assignedIPAddresses[inputIP] < 60:
+			if (datetime.now() - assignedIPAddresses[inputIP]).seconds < 60:
 				print(inputIP + " ASSIGNED")
 			else:
 				assignedIPAddresses.pop(inputIP)
@@ -31,12 +32,12 @@ def status(inputIP:str) -> str:
 def release(inputIP:str) -> str:
 	if(checkValidIP(inputIP)):
 		#IP is in our assigned IPs and its timer hasn't expired. we want to release it
-		if inputIP in assignedIPAddresses and time.time - assignedIPAddresses[inputIP] < 60:
+		if inputIP in assignedIPAddresses and (datetime.now() - assignedIPAddresses[inputIP]).seconds < 60:
 			assignedIPAddresses.pop(inputIP)
 			retiredIPAddresses.append(inputIP)
 			print("RELEASED for " + inputIP)
 		#IP is in our assigned IPs but its timer has expired, so it's technically no longer an assigned IP. we want to alert the user that it is not assigned, and remove it from our assigned IPs
-		elif inputIP in assignedIPAddresses and time.time - assignedIPAddresses[inputIP] >= 60:
+		elif inputIP in assignedIPAddresses and (datetime.now() - assignedIPAddresses[inputIP]).seconds >= 60:
 			assignedIPAddresses.pop(inputIP)
 			retiredIPAddresses.append(inputIP)
 			print("This IP address is not assigned.")
@@ -90,7 +91,7 @@ def generateIP() -> str:
 					ipGenerator[0] += 1
 					if ipGenerator[1] > 255:
 						return "-1"
-		generatedIP = str(ipGenerator[0]) + '.' + str(ipGenerator[1]) + '.' + str(ipGenerator[2]) + str(ipGenerator[3])
+		generatedIP = str(ipGenerator[0]) + '.' + str(ipGenerator[1]) + '.' + str(ipGenerator[2]) + '.' + str(ipGenerator[3])
 		ipGenerator[3] += 1
 		return generatedIP
 

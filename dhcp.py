@@ -117,6 +117,9 @@ def main():
 		elif userInput.startswith("STATUS"):
 			status(userInput[7:])
 			userInput = input("> ")
+		else:
+			print("Invalid input")
+			userInput = input("> ")
 
 #written by Mars Cadieux
 if __name__ == "__main__":
